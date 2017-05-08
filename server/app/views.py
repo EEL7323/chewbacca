@@ -53,6 +53,25 @@ def transaction_user(user_id):
 				db.session.rollback()
 				return ("", 400)
 
+@app.route('/user/id/card/<cardid>', methods=['GET'])
+def get_userid_from_cardid(cardid):
+	u = User.query.filter_by(cardID=cardid).first()
+	if u == None:
+		obj = {"user_id":-1}
+	else:
+		obj = {"user_id":u.id}
+	return jsonify(obj)
+
+@app.route('/user/id/username/<username>', methods=['GET'])
+def get_userid_from_username(username):
+	u = User.query.filter_by(username=username).first()
+	if u == None:
+		obj = {"user_id":-1}
+	else:
+		obj = {"user_id":u.id}
+	return jsonify(obj)
+
+
 @app.route('/user', methods=['POST'])
 def new_user():
 	""" 
