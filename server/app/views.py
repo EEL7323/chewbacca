@@ -111,6 +111,16 @@ def user_user(user_id):
 	if request.method == "GET":
 		u = User.query.filter_by(user_id = user_id).first()
 
+@app.route('/echo', methods=['POST'])
+def echo():
+	required_data = set(["key1","key2"])
+	if not request.json or not  all([x in required_data for x in request.json.keys()]):
+		return ("JSON INVALIDO",400)
+	else:
+		key1 = request.json.get('key1')
+		key2 = request.json.get('key2')
+		return "Enviado:\nkey1={key1}\nkey2={key2}\n".format(**locals())
+
 @app.route('/')
 def index():
     return 'Hello, world!'
