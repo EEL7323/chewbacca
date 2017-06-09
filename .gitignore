@@ -43,3 +43,9 @@ Thumbs.db
 ######################
 build-*
 *.pro.user
+
+# Server Generated files #
+##########################
+app.db
+db_repository/
+flask/
