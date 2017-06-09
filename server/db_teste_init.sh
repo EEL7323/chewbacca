@@ -1,7 +1,7 @@
 #/bin/bash
 
-rm app.db
-rm -r db_repository/
+[ -f app.db ] && rm app.db
+[ -d db_repository ] && rm -r db_repository
 ./db_create.py
 ./db_migrate.py
 ./db_populate.py
