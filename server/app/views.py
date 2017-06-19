@@ -17,7 +17,10 @@ def transaction():
 		user_id = item.user_id
 		event = item.event_id
 		timestamp = item.timestamp
-		obj = {"user_id":user_id,"event":event, "timestamp":timestamp}
+		U = User.query.filter_by(id=user_id)[0]
+		username = U.username
+		cardid = U.cardID
+		obj = {"user_id":user_id,"event":event, "timestamp":timestamp, "username":username, "cardID": cardid}
 		J.append(obj)
 	return jsonify(J)
 
@@ -35,7 +38,10 @@ def transaction_user(user_id):
 			user_id = item.user_id
 			event = item.event_id
 			timestamp = item.timestamp
-			obj = {"user_id":user_id,"event":event, "timestamp":timestamp}
+			U = User.query.filter_by(id=user_id)[0]
+			username = U.username
+			cardid = U.cardID
+			obj = {"user_id":user_id,"event":event, "timestamp":timestamp,"username":username, "cardID": cardid}
 			J.append(obj)
 		return jsonify(J)
 	else:
