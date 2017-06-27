@@ -35,10 +35,35 @@ class List {
 	Node *head;
 public:
 	List() { head = NULL; };
+	Node* Find(string cardID);
 	void Print();
 	void Append(Student* data);
 	void Delete(Student* data);
 };
+
+Node* List::Find(string s) {
+	Node *tmp = head;
+	if (tmp == NULL) {
+		return NULL;
+	}
+
+	if (tmp->Next() == NULL) {
+		if (tmp->Data()->getCardID() == s) {
+			return tmp;
+		} else {
+			return NULL;
+		}
+	} else {
+		while (tmp != NULL) {
+			if (tmp->Data()->getCardID() == s) {
+				return tmp;
+			}
+			tmp = tmp->Next();
+		}
+
+		return NULL;
+	}
+}
 
 void List::Print() {
 
@@ -139,11 +164,33 @@ void List::Delete(Student* data) {
 	}
 }
 
+/*
+###TODO###
+caso nao consiga conexao com o server, criar uma especie  de "lista" de atualizacao dentro do programa
+*/
+int atualiza_credito_servidor(Student* s) {
+	int user_id = s->getUserId();
+	string ep = "http://cluster.linse.ufsc.br:5000/transaction/"+to_string(user_id);
+	RestClient::Response r = RestClient::post(ep, "application/json", "{\"event_id\": -1}");
+	if (r.code == -1) {
+		//ADICIONA NA LISTA PRA ATUALIZAR
+		return r.code;
+	} else {
+		return r.code;
+	}
+	
+}
+
 
 int main()
 {   
-	RestClient::Response r = RestClient::get("http://127.0.0.1:5000/transaction");
-	//std::cout << r.body;
+	RestClient::Response r = RestClient::get("http://cluster.linse.ufsc.br:5000/transaction");
+	//std::cout << r.code;
+	
+	if (r.code == -1) {
+		cout << "SERVIDOR NAO RESPONDE... NAO É POSSÍVEL INICIAR" << endl;
+		return 1;
+	}
 	auto j = json::parse(r.body);
 	List l;
 	for (auto& element : j) 
@@ -154,12 +201,35 @@ int main()
 		s->setCardID(j2["cardID"]);
 		s->setUserId(j2["user_id"]);
 		s->setCredito(j2["event"]);
-		cout << "SERVER_DATA: " << s->getUserId() << " " << s->getCredito() << endl;
+		//cout << "SERVER_DATA: " << s->getUserId() << " " << s->getCredito() << endl;
 		l.Append(s);
 	}
-
 	l.Print();
+	while (1){ 
+		string cartao;
+		cout << "DIGITE O CARTAO" << endl;
+		cin >> cartao;
+		cout << cartao << endl;
+		Node *tmp = l.Find(cartao);
+		if (!tmp) {
+			cout << "PESSOA NAO ENCONTRADA" << endl;
+		} else {
+			cout << "PESSOA ENCONTRADA "<< endl;
+			if (tmp->Data()->getCredito() > 0) {
+				tmp->Data()->setCredito(tmp->Data()->getCredito()-1); 
+				cout << "AUTORIZADO... novo credito: " << tmp->Data()->getCredito() <<endl;
+				int c = atualiza_credito_servidor(tmp->Data());
+				cout << "CODIGO ATUALIZACAO " << c << endl;
+				if (c == 201) {
+					cout << "CREDITO ATUALIZADO NO SERVER" << endl;
+				} else {
+					cout << "CREDITO NAO ATUALIZADO NO SERVER" << endl;
+				}
+			} else {
+				cout << "CREDITOS INSUFICIENTES" << endl;
+			}
+		}
+	} 
 	return 0;
-
 }
 
