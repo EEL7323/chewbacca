@@ -1,7 +1,7 @@
 LDFLAGS=-L/usr/lib/x86_64-linux-gnu
 LDLIBS=-lcurl
 
-appname := exemplo
+appname := placa
 
 CXX := g++
 CXXFLAGS := -std=c++11 -g -Wall
@@ -26,5 +26,4 @@ clean:
 
 dist-clean: clean
 	rm -f *~ .depend
-
 
