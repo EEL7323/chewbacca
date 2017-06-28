@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "nextdialog.h"
+#include "warningdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -14,6 +16,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
+
 
 private slots:
     void on_actionbuttom_triggered();
@@ -28,9 +31,11 @@ private slots:
 
     void on_usuario_text_editingFinished();
 
+
 private:
     Ui::MainWindow *ui;
-
+    NextDialog *nextDialog;
+    WarningDialog *warningDialog;
 };
 
 #endif // MAINWINDOW_H

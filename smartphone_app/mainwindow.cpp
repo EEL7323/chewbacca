@@ -1,5 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <QString>
+#include <QtCore/QCoreApplication>
+#include <QDir>
+#include <QFileInfo>
+#include <QDebug>
+#include <QFile>
+#include <QTextStream>
+#include "file.h"
+
+
 
 
 
@@ -16,34 +26,34 @@ MainWindow::~MainWindow()
 }
 
 
+
 void MainWindow::on_Mat_ok_clicked()
 {
-    QString Matricula, j, Usuario, Passe;
+    QString Matricula, Senha, Pessoas, Saldo;
     Matricula = ui->Dig_mat->text();
-    j = Matricula.data()[0];
-    //ui->teste_1->setText(QString::number(Matricula));
+    Senha = ui->Dig_sen->text();
+    Pessoas = "0";
+    Saldo = "0";
+
+    File s;
+    QString mFilename = "matricula.txt";
+    s.Write(mFilename, Matricula);
+    mFilename = "senha.txt";
+    s.Write(mFilename, Senha);
+    mFilename = "pessoas.txt";
+    s.Write(mFilename, Pessoas);
+    mFilename = "saldo.txt";
+    s.Write(mFilename, Saldo);
+    mFilename = "log.txt";
+    s.Write(mFilename, "");
+    mFilename = "data.txt";
+    s.Write(mFilename, "");
 
 
-    if (j == "1" or j == "0" ) { //Considerando que as matriculas dos alunos começam com 0 ou 1
-        Usuario = "Aluno";
-        Passe = "R$ 1,50";
-        ui->usuario_text->setText(Usuario);
-        ui->passe_text->setText(Passe);
 
 
-    }
 
-    else if (j == "9") { //Considerando que as matriculas dos servidores começam com 9
-        Usuario = "Servidor";
-        Passe = "R$ 6,00";
-        ui->usuario_text->setText(Usuario);
-        ui->passe_text->setText(Passe);
-
-    }
-
-    else {
-        ui->usuario_text->setText("Matricula Incorreta");
-        ui->passe_text->setText("Matricula Incorreta");
-    }
+    nextDialog = new NextDialog(this);
+    nextDialog ->show();
 
 }
