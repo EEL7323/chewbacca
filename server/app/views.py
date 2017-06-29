@@ -7,6 +7,25 @@ from app import app, db
 from functools import wraps
 from flask import jsonify, request, abort, render_template, flash, url_for, redirect
 
+@app.route('/contador', methods=['GET', 'POST'])
+def contador():
+	"""
+	Obtem ou altera a contagem atual de pessoas no RU
+	"""
+	C = Contador.query.filter_by(id=1).first()
+	if request.method == "GET":
+		v = C.v
+		timestamp = C.timestamp
+		obj = {"contador" : v , "timestamp" : timestamp}
+		return jsonify([obj])
+	else:
+		if not request.json or not 'v' in request.json:
+			abort(400)
+		else:
+			Contador.query.filter_by(id=1).update({"v":request.json['v'], "timestamp":datetime.datetime.utcnow()},synchronize_session=False)
+			db.session.commit()
+			return ('', 201)
+
 @app.route('/transaction', methods=['GET'])
 def transaction():
 	"""
