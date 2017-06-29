@@ -1,30 +1,12 @@
-#ifndef NODE_H
-#define NODE_H
-
-
 template<class T>
 class Node
 {
-
-private:
-    Node* prox;
-    Node* ant;
-    T* objeto;
-
+    T* data;
+    Node* next;
 public:
-    Node();
-    Node(T*);
-    ~Node();
-
-    void setProx(Node*);
-    void setAnt(Node*);
-    void setInfo(T);
-    Node* getProx();
-    Node* getAnt();
-    T getInfo();
-    //void exibir( );
+    Node() {};
+    void setData(T* aData) { data = aData; };
+    void setNext(Node* aNext) { next = aNext; };
+    T* getData() { return data; };
+    Node* getNext() { return next; };
 };
-
-
-
-#endif // NODE_H

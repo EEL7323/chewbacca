@@ -1,43 +1,29 @@
-#ifndef CATrACA_H
-#define CATrACA_H
-
-#include <iostream>
-#include <sstream>
 #include <string>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include "restclient/restclient.h"
-#include "jsonparser/json.hpp"
-#include "list_trans.h"
-#include "transaction.h"
-#include "list_users.h"
+#include "list.h"
 
 using namespace std;
-using json = nlohmann::json;
-
 
 class Catraca
 {
-    List_users dentro;
-    List_users fora;
-    string IP;
-    RestClient::Response r;
-    string cardID;
-    long int user_id;
-    string buffer;
-    json j;
-    ostringstream aux;
-
+	string serverIP;
+	int serverPort;
+	List* lista;
+	int status;
 
 public:
-    void requisita_IP();
-    void servidor_funcionando();
-    void entrada_cardID();
-    void operando();
+	Catraca();
+	~Catraca();
+
+	void run();
+	void start();
+	int getStatus();
+	string getServerIP();
+	int getServerPort();
+	void setServerIP(string serverIP);
+	void setServerPort(int serverPort);
+	void upServerStudentCount(int contagem);
+	//void setList(List* lista);
 
 
 };
 
-
-#endif
