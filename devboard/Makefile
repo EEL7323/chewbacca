@@ -13,6 +13,7 @@ all: $(appname)
 
 $(appname): $(objects)
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o $(appname) $(objects) $(LDLIBS)
+	@rm -f $(objects)
 
 depend: .depend
 
