@@ -80,15 +80,15 @@ void Catraca::setList(List* lista)
 
 void Catraca::start()
 {
-    cout << "Digite o ip do servidor:" << endl;
+    cout << "Digite o ip do servidor" << endl;
     cin >> serverIP;
 
-    cout << "Digite a porta:" << endl;
-    cin >> serverPort;
+    cout << "Digite a porta" << endl;
+   	cin >> serverPort;
 
-	string ep = serverIP+":"+to_string(serverPort)+"/transaction";
+	string ep = serverIP+":"+to_string(serverPort);
 	cout << "Conectando a " << ep << endl;
-	RestClient::Response r = RestClient::get(ep);
+	RestClient::Response r = RestClient::get(ep+"/transaction");
 	if (r.code == -1){
 		status = -1;
 	} else if (r.code == 200) {
@@ -101,6 +101,9 @@ void Catraca::start()
 			s->setCardID(element["cardID"]);
 			s->setUserId(element["user_id"]);
 			s->setCredito(element["event"]);
+			s->setMatricula(element["matricula"]);
+			s->setSalt(element["salt"]);
+			s->setPassword(element["n_password_hash"]);
 			l->append(s);
 		}
 		lista = l;
@@ -122,6 +125,8 @@ void Catraca::run()
 		cout << "Quantidade de usuarios dentro " << lista->getContador() << endl;
 		cout << "Digite o cartão" << endl;
 		cin >> cartao;
+		transform(cartao.begin(), cartao.end(), cartao.begin(),::toupper);
+
 		//TODO Diferenciar quando a pessoa entra e sai do restaurante e chamar List::decContador(Student* s) quando alguém sair
 		//TODO Fazer com que a ideia de senha funcione?
 		tmp = lista->find(cartao);
