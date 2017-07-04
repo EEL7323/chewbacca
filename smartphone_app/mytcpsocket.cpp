@@ -1,3 +1,11 @@
+/*
+
+Faz a conexão com o servidor e extrai dos arquivos json informações para as transações,
+contador de pessoas no RU e saldo.
+
+*/
+
+
 #include "mytcpsocket.h"
 #include "QJsonObject"
 #include "QJsonDocument"
@@ -12,8 +20,7 @@ MyTcpSocket::MyTcpSocket(QObject *parent) :
 }
 
 
-
-void MyTcpSocket::doConnect()
+void MyTcpSocket::ConnectInicial()
 {
     socket = new QTcpSocket(this);
 
@@ -22,40 +29,35 @@ void MyTcpSocket::doConnect()
     connect(socket, SIGNAL(bytesWritten(qint64)),this, SLOT(bytesWritten(qint64)));
     connect(socket, SIGNAL(readyRead()),this, SLOT(readyRead()));
 
-    qDebug() << "connecting...";
+    //qDebug() << "connecting...";
 
 
     socket->connectToHost("127.0.0.1", 5000);
 
 
-    if(!socket->waitForConnected(15000))
+    if(!socket->waitForConnected(5000))
     {
-        qDebug() << "Error: " << socket->errorString();
+        //qDebug() << "Error: " << socket->errorString();
     }
 }
 
+
+
 void MyTcpSocket::connected()
 {
-    File q;
+
+
+    qDebug() << "connected...";
+
+    File w;
 
     QString mFilename = "matricula.txt";
-    QString Matricula = q.Read(mFilename, Matricula);
-    qDebug() << "connected...";
+    QString Matricula = "";
+    Matricula = w.Read(mFilename, Matricula);
     qDebug() << Matricula;
-    QString t = QString("GET /transaction/%1 HTTP/1.0\r\n\r\n\r\n\r\n").arg(Matricula);
-
-
+    QString t = QString("GET /transaction/%1 HTTP/1.0 \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n").arg(Matricula);
     socket->write(t.toLocal8Bit());
-       qDebug() << "WRITEN...";
-    socket->waitForReadyRead(10000);
-    /*QString sok = "";
-    while (socket->bytesAvailable() > 0){
-    sok.append(socket->readAll());
     socket->waitForReadyRead(5000);
-    }
-
-    qDebug() << sok;*/
-
 
 }
 
@@ -71,45 +73,53 @@ void MyTcpSocket::bytesWritten(qint64 bytes)
 
 void MyTcpSocket::readyRead()
 {
-    File s;
+    File r;
     qDebug() << "reading...";
-
-
+    qDebug() << "bites" << socket->bytesAvailable();
     QString data = "";
     while (socket->bytesAvailable() > 0){
     data.append(socket->readAll());
     socket->waitForReadyRead(5000);
     }
+    qDebug() << "DATA" << data;
     data.remove(0,147);
-    qDebug() << data;
     QString mFilename = "data.txt";
-    s.Write(mFilename, data);
+    r.Write(mFilename, data);
 
 
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
-    qDebug() << "json" << jsonDoc;
+    qDebug() << "jsonDoc" << jsonDoc;
     QJsonArray jsonArray = jsonDoc.array();
 
     if (jsonDoc.isEmpty()){
-        qDebug() << "Matricula incorreta";
-        QString mFilename = "log.txt";
-        s.Write(mFilename, "ERROR");
-
+        mFilename = "log.txt";
+        r.Write(mFilename, "ERROR");
     }
-    else{
-    QString mFilename = "log.txt";
-    s.Write(mFilename, "OK");
-
-    qDebug() << "Matricula correta";
+    else
+    {
     int jsonInt;
     int i = 0;
     int saldo = 0;
+    QString transactions = "";
+    QString time = "";
     while (i < jsonArray.size()) {
     QJsonObject jsonObj = jsonArray[i].toObject();
-    qDebug() << "object" << jsonObj;
+    //qDebug() << "object" << jsonObj;
     jsonInt = jsonObj.value("event").toInt();
     saldo = saldo + jsonInt;
-    qDebug() << "value" << saldo;
+    qDebug() << "json int " << jsonInt;
+    if(jsonInt < 0){
+    transactions.append("\n\n Creditos Utilizados:   ");
+    transactions.append(QString::number(jsonInt));
+    }
+    else {
+    transactions.append("\n\n Creditos Inseridos:   ");
+    transactions.append(QString::number(jsonInt));
+    }
+    time = jsonObj.value("timestamp").toString();
+    transactions.append("\n Data e Hora:   ");
+    transactions.append(time);
+    qDebug() << "transacoes " << time;
     i = i +1;
     //qDebug() << "i" << i;
     }
@@ -117,9 +127,41 @@ void MyTcpSocket::readyRead()
 
     QString saldoFinal = QString::number(saldo);
     mFilename = "saldo.txt";
-    s.Write(mFilename, saldoFinal);
+    r.Write(mFilename, saldoFinal);
+    mFilename = "transactions.txt";
+    r.Write(mFilename, transactions);
+    mFilename = "log.txt";
+    r.Write(mFilename, "OK");
     }
+}
 
 
+void MyTcpSocket::ConnectContador()
+{
+    socket = new QTcpSocket(this);
 
+    socket->connectToHost("127.0.0.1", 5000);
+
+
+    QString t = QString("GET /contador HTTP/1.0 \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");
+    socket->write(t.toLocal8Bit());
+    socket->waitForReadyRead(5000);
+
+
+    File c;
+    QString contador = "";
+    while (socket->bytesAvailable() > 0){
+    contador.append(socket->readAll());
+    socket->waitForReadyRead(5000);
+    }
+    contador.remove(0,146);
+
+
+    QJsonDocument contadorDoc = QJsonDocument::fromJson(contador.toUtf8());
+    QJsonArray contadorArray = contadorDoc.array();
+    QJsonObject contadorObj = contadorArray[0].toObject();
+    int pessoas = contadorObj.value("contador").toInt();
+    QString pessoasFinal = QString::number(pessoas);
+    QString mFilename = "pessoas.txt";
+    c.Write(mFilename, pessoasFinal);
 }

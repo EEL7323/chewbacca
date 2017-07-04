@@ -2,7 +2,8 @@
 #define NEXTDIALOG_H
 
 #include <QDialog>
-#include "warningdialog.h"
+#include "mytcpdialog.h"
+#include "enterdialog.h"
 #include "creditdialog.h"
 #include "transactionsdialog.h"
 #include "mytcpsocket.h"
@@ -21,23 +22,19 @@ public:
     ~NextDialog();
 
 private slots:
-    void on_label_linkActivated(const QString &link);
-
-    void on_Ent_mat_textChanged(const QString &arg1);
-
-    void on_pushButton_clicked();
-
-    void on_pushButton_clicked(bool checked);
-
     void on_pushButton_4_clicked();
 
-    void on_pushButton_3_clicked();
+    void on_pushButton_6_clicked();
 
-    void on_pushButton_2_clicked();
+    void on_pushButton_7_clicked();
+
+    void on_pushButton_5_clicked();
 
 private:
+
     Ui::NextDialog *ui;
-    WarningDialog *warningDialog;
+    MyTcpDialog *mytcpDialog;
+    EnterDialog *enterDialog;
     CreditDialog *creditDialog;
     TransactionsDialog *transactionsDialog;
 };

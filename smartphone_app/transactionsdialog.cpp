@@ -1,3 +1,8 @@
+/*
+
+Função com a finalidade de exibir as transaçoes realizadas pelo usuario.
+
+*/
 #include "transactionsdialog.h"
 #include "ui_transactionsdialog.h"
 #include "file.h"
@@ -15,22 +20,18 @@ TransactionsDialog::~TransactionsDialog()
     delete ui;
 }
 
-
-
-
-void TransactionsDialog::on_pushButton_2_clicked()
-{
-    hide();
-}
-
-void TransactionsDialog::on_pushButton_clicked()
+void TransactionsDialog::on_pushButton_clicked()//transaçoes
 {
     File w;
 
     QString Transacoes;
-    QString mFilename = "data.txt";
+    QString mFilename = "transactions.txt";
     Transacoes = w.Read(mFilename, Transacoes);
-    Transacoes.replace(QString("event"), QString("Creditos"));
-    Transacoes.replace(QString("timestamp"), QString("Data e hora"));
     ui->TransactionsDialog_2->appendPlainText(Transacoes);
 }
+
+void TransactionsDialog::on_pushButton_2_clicked()//sair
+{
+    hide();
+}
+
