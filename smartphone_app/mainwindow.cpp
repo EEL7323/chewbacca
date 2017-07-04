@@ -30,15 +30,15 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    QString Matricula, Senha, Pessoas, Saldo;
-    Matricula = ui->matricula->text();
+    QString userid, Senha, Pessoas, Saldo;
+    userid = ui->matricula->text();
     Senha = ui->password->text();
     Pessoas = "0";
     Saldo = "0";
 
     File s;
-    QString mFilename = "matricula.txt";
-    s.Write(mFilename, Matricula);
+    QString mFilename = "userid.txt";
+    s.Write(mFilename, userid);
     mFilename = "senha.txt";
     s.Write(mFilename, Senha);
     mFilename = "pessoas.txt";
@@ -46,6 +46,10 @@ void MainWindow::on_pushButton_clicked()
     mFilename = "saldo.txt";
     s.Write(mFilename, Saldo);
     mFilename = "log.txt";
+    s.Write(mFilename, "");
+    mFilename = "matricula.txt";
+    s.Write(mFilename, "");
+    mFilename = "nome.txt";
     s.Write(mFilename, "");
     mFilename = "transactions.txt";
     s.Write(mFilename, "");

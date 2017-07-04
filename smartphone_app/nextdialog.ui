@@ -17,9 +17,9 @@
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>820</y>
+     <y>830</y>
      <width>341</width>
-     <height>101</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
@@ -29,8 +29,8 @@
   <widget class="QLabel" name="label_3">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>600</y>
+     <x>10</x>
+     <y>700</y>
      <width>161</width>
      <height>71</height>
     </rect>
@@ -42,8 +42,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>150</y>
+     <x>10</x>
+     <y>130</y>
      <width>161</width>
      <height>61</height>
     </rect>
@@ -55,8 +55,8 @@
   <widget class="QLineEdit" name="saldo">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>670</y>
+     <x>290</x>
+     <y>690</y>
      <width>301</width>
      <height>121</height>
     </rect>
@@ -65,8 +65,8 @@
   <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>400</y>
+     <x>10</x>
+     <y>570</y>
      <width>301</width>
      <height>61</height>
     </rect>
@@ -75,21 +75,21 @@
     <string>Total de pessoas</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="matricula">
+  <widget class="QLineEdit" name="userid">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>220</y>
+     <x>290</x>
+     <y>130</y>
      <width>301</width>
-     <height>131</height>
+     <height>121</height>
     </rect>
    </property>
   </widget>
   <widget class="QLineEdit" name="pessoas">
    <property name="geometry">
     <rect>
-     <x>120</x>
-     <y>470</y>
+     <x>290</x>
+     <y>550</y>
      <width>301</width>
      <height>121</height>
     </rect>
@@ -99,9 +99,9 @@
    <property name="geometry">
     <rect>
      <x>370</x>
-     <y>820</y>
+     <y>830</y>
      <width>331</width>
-     <height>101</height>
+     <height>91</height>
     </rect>
    </property>
    <property name="text">
@@ -114,7 +114,7 @@
      <x>20</x>
      <y>20</y>
      <width>321</width>
-     <height>81</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
@@ -127,11 +127,57 @@
      <x>370</x>
      <y>20</y>
      <width>331</width>
-     <height>81</height>
+     <height>61</height>
     </rect>
    </property>
    <property name="text">
     <string>Transações</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>290</y>
+     <width>251</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Nome</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="nome">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>270</y>
+     <width>301</width>
+     <height>121</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_5">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>420</y>
+     <width>161</width>
+     <height>71</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Matricula</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="matricula">
+   <property name="geometry">
+    <rect>
+     <x>290</x>
+     <y>410</y>
+     <width>301</width>
+     <height>121</height>
+    </rect>
    </property>
   </widget>
  </widget>

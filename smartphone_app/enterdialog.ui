@@ -49,6 +49,19 @@
     <string>OK</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>30</y>
+     <width>221</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status do RU</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

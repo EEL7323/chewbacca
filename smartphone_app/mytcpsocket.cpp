@@ -32,7 +32,7 @@ void MyTcpSocket::ConnectInicial()
     //qDebug() << "connecting...";
 
 
-    socket->connectToHost("127.0.0.1", 5000);
+    socket->connectToHost("192.168.0.103", 5000);
 
 
     if(!socket->waitForConnected(5000))
@@ -51,11 +51,10 @@ void MyTcpSocket::connected()
 
     File w;
 
-    QString mFilename = "matricula.txt";
-    QString Matricula = "";
-    Matricula = w.Read(mFilename, Matricula);
-    qDebug() << Matricula;
-    QString t = QString("GET /transaction/%1 HTTP/1.0 \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n").arg(Matricula);
+    QString mFilename = "userid.txt";
+    QString userid = "";
+    userid = w.Read(mFilename, userid);
+    QString t = QString("GET /transaction/%1 HTTP/1.0 \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n").arg(userid);
     socket->write(t.toLocal8Bit());
     socket->waitForReadyRead(5000);
 
@@ -102,11 +101,15 @@ void MyTcpSocket::readyRead()
     int saldo = 0;
     QString transactions = "";
     QString time = "";
+    QString matricula = "";
+    QString nome = "";
     while (i < jsonArray.size()) {
     QJsonObject jsonObj = jsonArray[i].toObject();
     //qDebug() << "object" << jsonObj;
     jsonInt = jsonObj.value("event").toInt();
     saldo = saldo + jsonInt;
+    matricula = jsonObj.value("matricula").toString();
+    nome = jsonObj.value("username").toString();
     qDebug() << "json int " << jsonInt;
     if(jsonInt < 0){
     transactions.append("\n\n Creditos Utilizados:   ");
@@ -118,14 +121,20 @@ void MyTcpSocket::readyRead()
     }
     time = jsonObj.value("timestamp").toString();
     transactions.append("\n Data e Hora:   ");
-    transactions.append(time);
+    time = time.remove("GMT");
+    transactions.append(time.remove(0,4));
     qDebug() << "transacoes " << time;
     i = i +1;
     //qDebug() << "i" << i;
     }
 
 
+
     QString saldoFinal = QString::number(saldo);
+    mFilename = "matricula.txt";
+    r.Write(mFilename, matricula);
+    mFilename = "nome.txt";
+    r.Write(mFilename, nome);
     mFilename = "saldo.txt";
     r.Write(mFilename, saldoFinal);
     mFilename = "transactions.txt";
@@ -140,7 +149,7 @@ void MyTcpSocket::ConnectContador()
 {
     socket = new QTcpSocket(this);
 
-    socket->connectToHost("127.0.0.1", 5000);
+    socket->connectToHost("192.168.0.103", 5000);
 
 
     QString t = QString("GET /contador HTTP/1.0 \r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n");

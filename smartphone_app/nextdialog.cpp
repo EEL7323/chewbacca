@@ -32,21 +32,27 @@ void NextDialog::on_pushButton_4_clicked()// entrar no ru
 
 void NextDialog::on_pushButton_6_clicked()//connected
 {
-    QString Matricula, Senha, Pessoas, Saldo, Log;
-    QString mFilename = "matricula.txt";
+    QString userid, Senha, Pessoas, Saldo, Nome, Matricula;
+    QString mFilename = "userid.txt";
     MyTcpSocket w;
     w.ConnectInicial();
     qDebug() << "aqui";
     w.ConnectContador();
     File s;
-    Matricula = s.Read(mFilename, Matricula);
-    qDebug() << Matricula;
+    userid = s.Read(mFilename, userid);
+    qDebug() << userid;
     mFilename = "senha.txt";
     Senha = s.Read(mFilename, Senha);
     mFilename = "pessoas.txt";
     Pessoas = s.Read(mFilename, Pessoas);
     mFilename = "saldo.txt";
     Saldo = s.Read(mFilename, Saldo);
+    mFilename = "nome.txt";
+    Nome = s.Read(mFilename, Nome);
+    mFilename = "matricula.txt";
+    Matricula = s.Read(mFilename, Matricula);
+    ui->userid->setText(userid);
+    ui->nome->setText(Nome);
     ui->matricula->setText(Matricula);
     ui->pessoas->setText(Pessoas);
     ui->saldo->setText(Saldo);

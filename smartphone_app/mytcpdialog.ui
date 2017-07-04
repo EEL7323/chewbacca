@@ -49,6 +49,19 @@
     <string>Sair</string>
    </property>
   </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>60</y>
+     <width>401</width>
+     <height>61</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Status da Conexão</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
