@@ -1,0 +1,3 @@
+andre|15150162|ABCD0000|senha_andre|0000
+vinicius|15150165|ABCD0001|senha_vinicius|0001
+akkauam|15101128|ABCD0002|senha_akkauam|0002
