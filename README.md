@@ -69,3 +69,8 @@ Iniciará o servidor.
   * Tratar mais casos de inconsistência na entrada dos dados
   * Alterar a forma de entrada de dados para acesso
   * Tornar o servidor e o banco de dados mais amigável, onde seja possível ver as informações armazenadas principalmente
+
+#### Projetos externos utilizados
+ * Json parser - https://github.com/nlohmann/json
+ * C++ RestClient - https://github.com/mrtazz/restclient-cpp
+ * RFC1321 (MD5) - http://www.bzflag.org
