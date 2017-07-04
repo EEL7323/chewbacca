@@ -30,10 +30,9 @@ void List::incContador(Student* s)
 	s->changeStudentStatus();
 }
 
-void List::decContador(Student* s)
+void List::decContador()
 {
 	contadorStudentIn--;
-	s->changeStudentStatus();
 }
 
 int List::getContador()
@@ -41,7 +40,7 @@ int List::getContador()
 	return contadorStudentIn;
 }
 
-Node<Student>* List::find(string s) 
+Node<Student>* List::find(string s, TipoBusca tipo) 
 {
 	Node<Student> *tmp = head;
 	if (tmp == NULL) {
@@ -49,15 +48,34 @@ Node<Student>* List::find(string s)
 	}
 
 	if (tmp->getNext() == NULL) {
-		if (tmp->getData()->getCardID() == s) {
-			return tmp;
+		if (tipo == TipoCartao) {
+			if (tmp->getData()->getCardID() == s) {
+				return tmp;
+			} else {
+				return NULL;
+			}
+		} else if (tipo == TipoMatricula) {
+			if (tmp->getData()->getMatricula() == s) {
+				return tmp;
+			} else {
+				return NULL;
+			}
 		} else {
 			return NULL;
 		}
+			
 	} else {
 		while (tmp != NULL) {
-			if (tmp->getData()->getCardID() == s) {
-				return tmp;
+			if (tipo == TipoCartao) {
+				if (tmp->getData()->getCardID() == s) {
+					return tmp;
+				}
+			} else if (tipo == TipoMatricula) {
+				if (tmp->getData()->getMatricula() == s) {
+					return tmp;
+				}
+			} else {
+				return NULL;
 			}
 			tmp = tmp->getNext();
 		}

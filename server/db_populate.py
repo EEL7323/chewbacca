@@ -16,7 +16,9 @@ with open('db_data_init/db_user_init.txt') as f:
 		U = models.User(usuario,matricula,cardID)
 		U.hash_password(password)
 		U.hash_n_password(n_password)
+		T = models.Transaction(author=U,timestamp=datetime.datetime.utcnow(),event_id=0)
 		db.session.add(U)
+		db.session.add(T)
 		db.session.commit()
 
 print >>sys.stderr, "Inserindo Transacoes..."
