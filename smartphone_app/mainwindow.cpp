@@ -1,3 +1,10 @@
+/*
+
+  Ui inicial para aquisição de dados iniciais do usuario, como user_id e senha.
+
+*/
+
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <QString>
@@ -8,10 +15,6 @@
 #include <QFile>
 #include <QTextStream>
 #include "file.h"
-
-
-
-
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -25,13 +28,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-
-
-void MainWindow::on_Mat_ok_clicked()
+void MainWindow::on_pushButton_clicked()
 {
     QString Matricula, Senha, Pessoas, Saldo;
-    Matricula = ui->Dig_mat->text();
-    Senha = ui->Dig_sen->text();
+    Matricula = ui->matricula->text();
+    Senha = ui->password->text();
     Pessoas = "0";
     Saldo = "0";
 
@@ -46,7 +47,7 @@ void MainWindow::on_Mat_ok_clicked()
     s.Write(mFilename, Saldo);
     mFilename = "log.txt";
     s.Write(mFilename, "");
-    mFilename = "data.txt";
+    mFilename = "transactions.txt";
     s.Write(mFilename, "");
 
 
@@ -55,5 +56,4 @@ void MainWindow::on_Mat_ok_clicked()
 
     nextDialog = new NextDialog(this);
     nextDialog ->show();
-
 }

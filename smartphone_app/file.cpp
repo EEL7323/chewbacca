@@ -1,3 +1,9 @@
+/*
+
+  Clase para escrita e leitura de arquivos
+
+*/
+
 #include "file.h"
 
 

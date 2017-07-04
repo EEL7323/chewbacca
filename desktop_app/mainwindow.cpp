@@ -1,6 +1,11 @@
 #include "mainwindow.h"
 #include "requestapi.h"
 #include "ui_mainwindow.h"
+#include "mytcpsocket.h"
+#include "QJsonObject"
+#include "QJsonDocument"
+#include "QJsonArray"
+
 
 class MainWindow::Data
 {
@@ -38,17 +43,40 @@ void MainWindow::on_pushButton_cadastro_clicked()
     json.insert("username", ui->lineEdit_cadastro_username->text());
     json.insert("password",ui->lineEdit_cadastro_password->text());
     json.insert("cardID", ui->lineEdit_cadastro_cardID->text());
+    json.insert("n_password",ui->lineEdit_cadastro_Npassword->text());
+    json.insert("matricula", ui->lineEdit_cadastro_matricula->text());
 
     d->r(this)->makeRequestPOST(s,json);
     ui->lineEdit_cadastro_cardID->clear();
     ui->lineEdit_cadastro_password->clear();
     ui->lineEdit_cadastro_username->clear();
-
+    ui->lineEdit_cadastro_Npassword->clear();
+    ui->lineEdit_cadastro_matricula->clear();
 }
 
 void MainWindow::on_pushButton_credito_clicked()
 {
-    ui->plainTextEdit->appendPlainText("Credito");
+    QString cartao = ui->lineEdit_credito_cardID->text();
+    MyTcpSocket *socket = new MyTcpSocket();
+
+    socket->setCartao(cartao);
+    socket->doConnect();
+
+    QString data = socket->getData().remove(0,153);
+
+    int user_id = data.toInt();
+    if (user_id == -1) {
+        //ui->plainTextEdit->appendPlainText("Usuario nao existe");
+    } else {
+        QJsonObject json;
+        json.insert("event_id",ui->lineEdit_credito_valor->text());
+        QString s = "http://127.0.0.1:5000/transaction/"+data;
+        d->r(this)->makeRequestPOST(s,json);
+        //ui->plainTextEdit->appendPlainText("Usuario existe");
+    }
+    ui->lineEdit_credito_cardID->clear();
+    ui->lineEdit_credito_valor->clear();
+    //ui->plainTextEdit->appendPlainText("Credito");
 }
 
 void MainWindow::on_pushButton_clicked()

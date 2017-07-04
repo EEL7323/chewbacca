@@ -15,9 +15,11 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-    requestapi.cpp
+    requestapi.cpp \
+    mytcpsocket.cpp
 
 HEADERS  += mainwindow.h \
-    requestapi.h
+    requestapi.h \
+    mytcpsocket.h
 
 FORMS    += mainwindow.ui

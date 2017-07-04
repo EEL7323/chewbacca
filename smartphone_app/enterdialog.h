@@ -1,20 +1,20 @@
-#ifndef CREDITDIALOG_H
-#define CREDITDIALOG_H
+#ifndef ENTERDIALOG_H
+#define ENTERDIALOG_H
 
 #include <QDialog>
 #include "comingdialog.h"
 
 namespace Ui {
-class CreditDialog;
+class EnterDialog;
 }
 
-class CreditDialog : public QDialog
+class EnterDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit CreditDialog(QWidget *parent = 0);
-    ~CreditDialog();
+    explicit EnterDialog(QWidget *parent = 0);
+    ~EnterDialog();
 
 private slots:
     void on_pushButton_clicked();
@@ -22,9 +22,8 @@ private slots:
     void on_pushButton_2_clicked();
 
 private:
-    Ui::CreditDialog *ui;
+    Ui::EnterDialog *ui;
     ComingDialog *comingDialog;
-
 };
 
-#endif // CREDITDIALOG_H
+#endif // ENTERDIALOG_H

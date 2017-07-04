@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QDebug>
+#include "file.h"
 
 
 
@@ -14,7 +15,8 @@ class MyTcpSocket : public QObject
 public:
     explicit MyTcpSocket(QObject *parent = 0);
 
-    void doConnect();
+    void ConnectInicial();
+    void ConnectContador();
 
 signals:
 
