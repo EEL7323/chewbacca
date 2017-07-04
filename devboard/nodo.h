@@ -1,3 +1,7 @@
+/*
+	Classe nodo com template
+*/
+
 template<class T>
 class Node
 {

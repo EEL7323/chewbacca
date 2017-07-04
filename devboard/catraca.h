@@ -14,10 +14,10 @@ public:
 	Catraca();
 	~Catraca();
 
-	void run();
-	void start();
-	int getStatus();
-	string getServerIP();
+	void run(); //Inicia o funcionamento da catraca
+	void start(); //Inicializa a lista principal
+	int getStatus(); //Retorna o status do funcionamento da placa, útil apenas no main
+	string getServerIP(); 
 	int getServerPort();
 	void setServerIP(string serverIP);
 	void setServerPort(int serverPort);

@@ -4,13 +4,13 @@ using namespace std;
 
 class Student 
 {
-    string cardID;
-    int userID;
-    int credito;
-    string matricula;
-    string salt;
-    string password_hash;
-    bool studentIn;
+    string cardID; //identificador do cartão
+    int userID; //identificador do usuario
+    int credito; //quantidade total de créditos
+    string matricula; //matricula do usuário
+    string salt; //salt da senha
+    string password_hash; //hash da senha original
+    bool studentIn; //status do usuario, dentro ou fora do restaurante
 public:
     Student() { 
         credito = 0; 
