@@ -6,7 +6,7 @@ MarkupSafe==1.0
 Pygments==2.2.0
 SQLAlchemy==1.1.9
 Tempita==0.5.2
-Werkzeug==0.12.1
+Werkzeug==0.15.3
 appdirs==1.4.3
 argparse==1.2.1
 backports.shutil-get-terminal-size==1.0.0
